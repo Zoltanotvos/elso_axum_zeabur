@@ -1,0 +1,22 @@
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>bemutatkozó</title>
+</head>
+<body>
+<h1>Hello world!</h1>
+<br>
+<p id="zotler">Ich bin Zotler, der beste Diktator auf der Welt</p>
+<button type="button" onclick="fuggveny()">nyomd meg ha mered</button>
+<button type="button" onclick="fuggveny2()">teszt gomb</button>
+</body>
+<script>
+    function fuggveny(){
+        window.location.href = "http://192.168.1.106:3000/"
+    }
+    function fuggveny2() {
+        document.getElementById("zotler").style.background = "red"
+    }
+</script>
+</html>
