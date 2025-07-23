@@ -7,6 +7,6 @@ RUN cargo build --release
 # Run stage
 FROM debian:bullseye-slim
 WORKDIR /app
-COPY --from=builder /app/target/release/zeabur-rust-demo .
-CMD ["./zeabur-rust-demo"]
+COPY --from=builder /app/target/release/elso_axum_projekt .
+CMD ["./elso_axum_projekt"]
 
