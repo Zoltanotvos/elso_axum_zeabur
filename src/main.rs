@@ -1,20 +1,19 @@
-use axum::{
-    routing::get,
-    Router,
+use axum::{Router, routing::get};
+use std::net::SocketAddr;
 
-};
-use axum::response::Html;
+async fn hello() -> &'static str {
+    "Hello from Rust + Zeabur!"
+}
 
 #[tokio::main]
 async fn main() {
-    // build our application with a single route
-    let app = Router::new()
-        .route("/", get(|| async { Html("Üdvözöllek a főoldalon!") }));
+    let port = std::env::var("PORT").unwrap_or_else(|_| "8080".to_string());
+    let addr: SocketAddr = format!("0.0.0.0:{}", port).parse().unwrap();
 
-    let port = std::env::var("PORT").unwrap_or("8080".to_string());
+    let app = Router::new().route("/", get(hello));
 
-
-    // run our app with hyper, listening globally on port 3000
-    let listener = tokio::net::TcpListener::bind(format!("0.0.0.0:{}", port.parse().unwrap())).await.unwrap();
-    axum::serve(listener, app).await.unwrap();
+    println!("Listening on {}", addr);
+    axum::serve(tokio::net::TcpListener::bind(&addr).await.unwrap(), app)
+        .await
+        .unwrap();
 }
