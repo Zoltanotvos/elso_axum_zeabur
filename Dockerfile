@@ -1,14 +1,18 @@
-# 1. Build stage
-FROM rust:1.78 as builder
+# Build stage with musl for static linking
+FROM clux/muslrust:stable as builder
+
 WORKDIR /app
 COPY . .
-RUN apt-get update && apt-get install -y pkg-config libssl-dev
+
+# Build the app statically
 RUN cargo build --release
 
-# 2. Runtime stage
-FROM debian:buster-slim
+# Runtime stage: use scratch or alpine
+FROM alpine:latest
+
 WORKDIR /app
-COPY --from=builder /app/target/release/elso_axum_projekt /app/app
-ENV PORT=3000
+COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/your-binary-name ./app
+
 EXPOSE 3000
+ENV PORT=3000
 CMD ["./app"]
