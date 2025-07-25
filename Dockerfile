@@ -11,7 +11,7 @@ RUN cargo build --release
 FROM alpine:latest
 
 WORKDIR /app
-COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/your-binary-name ./app
+COPY --from=builder /app/target/x86_64-unknown-linux-musl/release/elso_axum_projekt ./app
 
 EXPOSE 3000
 ENV PORT=3000
